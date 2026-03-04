@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net9.0": {}
+    "net9.0": {
+      "SGB.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/SGB.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SGB.Domain.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "SGB.Domain/1.0.0": {
+      "type": "project",
+      "path": "../SGB.Domain/SGB.Domain.csproj",
+      "msbuildProject": "../SGB.Domain/SGB.Domain.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net9.0": []
+    "net9.0": [
+      "SGB.Domain >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\New User\\.nuget\\packages\\": {},
@@ -38,7 +57,11 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\New User\\SGB\\SGB.Domain\\SGB.Domain.csproj": {
+              "projectPath": "C:\\Users\\New User\\SGB\\SGB.Domain\\SGB.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

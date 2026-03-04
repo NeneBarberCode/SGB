@@ -1,0 +1,11 @@
+C:\Users\New User\SGB\SGB.Domain\bin\Debug\net9.0\SGB.Domain.deps.json
+C:\Users\New User\SGB\SGB.Domain\bin\Debug\net9.0\SGB.Domain.dll
+C:\Users\New User\SGB\SGB.Domain\bin\Debug\net9.0\SGB.Domain.pdb
+C:\Users\New User\SGB\SGB.Domain\obj\Debug\net9.0\SGB.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\New User\SGB\SGB.Domain\obj\Debug\net9.0\SGB.Domain.AssemblyInfoInputs.cache
+C:\Users\New User\SGB\SGB.Domain\obj\Debug\net9.0\SGB.Domain.AssemblyInfo.cs
+C:\Users\New User\SGB\SGB.Domain\obj\Debug\net9.0\SGB.Domain.csproj.CoreCompileInputs.cache
+C:\Users\New User\SGB\SGB.Domain\obj\Debug\net9.0\SGB.Domain.dll
+C:\Users\New User\SGB\SGB.Domain\obj\Debug\net9.0\refint\SGB.Domain.dll
+C:\Users\New User\SGB\SGB.Domain\obj\Debug\net9.0\SGB.Domain.pdb
+C:\Users\New User\SGB\SGB.Domain\obj\Debug\net9.0\ref\SGB.Domain.dll

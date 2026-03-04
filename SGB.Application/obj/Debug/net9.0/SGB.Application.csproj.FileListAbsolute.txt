@@ -1,0 +1,15 @@
+C:\Users\New User\SGB\SGB.Application\bin\Debug\net9.0\SGB.Application.deps.json
+C:\Users\New User\SGB\SGB.Application\bin\Debug\net9.0\SGB.Application.dll
+C:\Users\New User\SGB\SGB.Application\bin\Debug\net9.0\SGB.Application.pdb
+C:\Users\New User\SGB\SGB.Application\bin\Debug\net9.0\SGB.Domain.dll
+C:\Users\New User\SGB\SGB.Application\bin\Debug\net9.0\SGB.Domain.pdb
+C:\Users\New User\SGB\SGB.Application\obj\Debug\net9.0\SGB.Application.csproj.AssemblyReference.cache
+C:\Users\New User\SGB\SGB.Application\obj\Debug\net9.0\SGB.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\New User\SGB\SGB.Application\obj\Debug\net9.0\SGB.Application.AssemblyInfoInputs.cache
+C:\Users\New User\SGB\SGB.Application\obj\Debug\net9.0\SGB.Application.AssemblyInfo.cs
+C:\Users\New User\SGB\SGB.Application\obj\Debug\net9.0\SGB.Application.csproj.CoreCompileInputs.cache
+C:\Users\New User\SGB\SGB.Application\obj\Debug\net9.0\SGB.Appl.FB4CC87E.Up2Date
+C:\Users\New User\SGB\SGB.Application\obj\Debug\net9.0\SGB.Application.dll
+C:\Users\New User\SGB\SGB.Application\obj\Debug\net9.0\refint\SGB.Application.dll
+C:\Users\New User\SGB\SGB.Application\obj\Debug\net9.0\SGB.Application.pdb
+C:\Users\New User\SGB\SGB.Application\obj\Debug\net9.0\ref\SGB.Application.dll
