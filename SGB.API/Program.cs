@@ -8,8 +8,9 @@ using SGB.API.Security;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
+builder.Services.AddAuthorization();
+builder.Services.AddControllers();
 builder.Services.AddScoped<JwtService>();
-
 
 builder.Services.AddDbContext<SgbDbContext>(options =>
     options.UseSqlServer(
@@ -45,13 +46,18 @@ var app = builder.Build();
 //  MIDDLEWARES
 // ========================
 
+if (app.Environment.IsDevelopment())
+{
+     
+    app.MapOpenApi();
+}
+// app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseHttpsRedirection();
 
-
-
-
+app.MapControllers();     
+// app.MapGet("/test", () => "API funcionando");
 app.Run();
 

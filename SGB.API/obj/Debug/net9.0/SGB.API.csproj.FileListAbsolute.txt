@@ -7,9 +7,9 @@ C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\SGB.API.runtimeconfig.json
 C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\SGB.API.dll
 C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\SGB.API.pdb
 C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\AutoMapper.dll
-C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\Azure.Core.dll
 C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\Azure.Identity.dll
+C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\BCrypt.Net-Next.dll
 C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\Humanizer.dll
 C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\New User\SGB\SGB.API\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
