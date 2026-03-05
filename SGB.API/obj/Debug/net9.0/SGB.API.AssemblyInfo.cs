@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SGB.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+344085fce0ddafd940225b1db5007c5f980e1ef2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26494747ba8b4d58ed61119d4237c88b6641bf60")]
 [assembly: System.Reflection.AssemblyProductAttribute("SGB.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SGB.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

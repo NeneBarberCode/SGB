@@ -12,7 +12,7 @@ public class Employee
 
     public string PasswordHash { get; set; } = string.Empty;
 
-    public string Rol { get; set; } = "Bibliotecario";
+    public string Role { get; set; } = "Bibliotecario";
 
     public bool Active { get; set; } = true;
 
