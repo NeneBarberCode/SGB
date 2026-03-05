@@ -13,3 +13,5 @@ C:\Users\New User\SGB\SGB.Infrastructure\obj\Debug\net9.0\SGB.Infrastructure.dll
 C:\Users\New User\SGB\SGB.Infrastructure\obj\Debug\net9.0\refint\SGB.Infrastructure.dll
 C:\Users\New User\SGB\SGB.Infrastructure\obj\Debug\net9.0\SGB.Infrastructure.pdb
 C:\Users\New User\SGB\SGB.Infrastructure\obj\Debug\net9.0\ref\SGB.Infrastructure.dll
+C:\Users\New User\SGB\SGB.Infrastructure\bin\Debug\net9.0\SGB.Infrastructure.runtimeconfig.json
+C:\Users\New User\SGB\SGB.Infrastructure\obj\Debug\net9.0\SGB.Infrastructure.genruntimeconfig.cache

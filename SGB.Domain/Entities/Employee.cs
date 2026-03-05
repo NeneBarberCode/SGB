@@ -1,6 +1,6 @@
 namespace SGB.Domain.Entities;
 
-public class Empleado
+public class Employee
 {
     public int Id { get; set; }
 
