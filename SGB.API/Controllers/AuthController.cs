@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
     
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(CreateEmpleadoDto dto)
+    public async Task<IActionResult> Register(CreateEmployeeDto dto)
     {
         if (await _context.Employees.AnyAsync(e => e.Email == dto.Email))
             return BadRequest("Este Email ya está registrado.");
