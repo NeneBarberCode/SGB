@@ -8,7 +8,6 @@
     ".NETCoreApp,Version=v9.0": {
       "SGB.API/1.0.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.0",
           "Microsoft.AspNetCore.OpenApi": "9.0.6",
           "Microsoft.EntityFrameworkCore.Design": "9.0.0",
           "Microsoft.IdentityModel.Tokens": "8.16.0",
