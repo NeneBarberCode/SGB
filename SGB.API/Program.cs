@@ -3,7 +3,7 @@ using SGB.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using SGB.API.Security;
+using SGB.Application.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 

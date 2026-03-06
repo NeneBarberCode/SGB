@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace SGB.API.Security;
+namespace SGB.Application.Security;
 
 public class JwtService
 {

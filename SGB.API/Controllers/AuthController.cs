@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SGB.API.Security;
 using SGB.Application.DTOs.Auth;
 using SGB.Application.Security;
 using SGB.Domain.Entities;
