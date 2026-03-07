@@ -24,6 +24,18 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddDbContext<SgbDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+        builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 // ========================
 // CONFIGURATION JWT      
 // ========================
@@ -61,7 +73,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 // app.UseHttpsRedirection();
-
+app.UseCors();   
 app.UseAuthentication();
 app.UseAuthorization();
 
