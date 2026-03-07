@@ -125,6 +125,9 @@
             "projectReferences": {
               "C:\\Users\\New User\\SGB\\SGB.Domain\\SGB.Domain.csproj": {
                 "projectPath": "C:\\Users\\New User\\SGB\\SGB.Domain\\SGB.Domain.csproj"
+              },
+              "C:\\Users\\New User\\SGB\\SGB.Infrastructure\\SGB.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\New User\\SGB\\SGB.Infrastructure\\SGB.Infrastructure.csproj"
               }
             }
           }

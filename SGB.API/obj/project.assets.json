@@ -1750,7 +1750,8 @@
           "AutoMapper": "16.1.0",
           "BCrypt.Net-Next": "4.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.0",
-          "SGB.Domain": "1.0.0"
+          "SGB.Domain": "1.0.0",
+          "SGB.Infrastructure": "1.0.0"
         },
         "compile": {
           "bin/placeholder/SGB.Application.dll": {}
