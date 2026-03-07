@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using SGB.Application.Security;
+using SGB.Application.Services.Interfaces;
+using SGB.Application.Services;
+using SGB.Application.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddScoped<JwtService>();
+
+// AutoMapper
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
+
+
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 builder.Services.AddDbContext<SgbDbContext>(options =>
     options.UseSqlServer(

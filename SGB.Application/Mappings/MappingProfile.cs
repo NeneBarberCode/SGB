@@ -1,4 +1,6 @@
 using AutoMapper;
+using SGB.Application.DTOs.Auth;
+using SGB.Domain.Entities;
 
 namespace SGB.Application.Mappings
 {
@@ -6,6 +8,10 @@ namespace SGB.Application.Mappings
     {
         public MappingProfile()
         {
+              CreateMap<Customer, CustomerDto>();
+            CreateMap<CreateCustomerDto, Customer>();
+
+            CreateMap<Borrowing, BorrowingResponseDto>();
         }
     }
 }
