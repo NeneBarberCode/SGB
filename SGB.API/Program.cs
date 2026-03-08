@@ -20,6 +20,7 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IBorrowingService, BorrowingService>();
 
 builder.Services.AddDbContext<SgbDbContext>(options =>
     options.UseSqlServer(

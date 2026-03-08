@@ -2,7 +2,7 @@ using SGB.Application.DTOs.Auth;
 
 namespace SGB.Application.Services.Interfaces
 {
-    public interface IBorroingService
+    public interface IBorrowingService
     {
         Task<IEnumerable<BorrowingResponseDto>> ListBorrowingsAsync();
         Task<BorrowingResponseDto> CreateBorrowingAsync(int customerId, int copyId);

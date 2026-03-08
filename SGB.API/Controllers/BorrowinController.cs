@@ -10,9 +10,9 @@ namespace SGB.API.Controllers;
 [Authorize]
 public class BorrowingController : ControllerBase
 {
-    private readonly IBorroingService _service;
+    private readonly IBorrowingService _service;
 
-    public BorrowingController(IBorroingService service)
+    public BorrowingController(IBorrowingService service)
     {
         _service = service;
     }
