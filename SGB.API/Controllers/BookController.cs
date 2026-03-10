@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SGB.Infrastructure.Persistence;
 using SGB.Domain.Entities;
+using SGB.Application.Services.Interfaces;
+using SGB.Application.DTOs.Auth;
 
 namespace SGB.API.Controllers;
 
@@ -10,11 +12,11 @@ namespace SGB.API.Controllers;
 [Route("api/[controller]")]
 public class BookController : ControllerBase
 {
-    private readonly SgbDbContext _context;
+     private readonly IBookService _service;
 
-    public BookController(SgbDbContext context)
+    public BookController( IBookService service)
     {
-        _context = context;
+        _service = service;
     }
 
     // GET: api/libro
@@ -22,19 +24,21 @@ public class BookController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var books = await _context.Books
-            .Include(l => l.Copies)
-            .ToListAsync();
-        return Ok(books);
+        var book = await _service.ListBooksAsync();
+           
+        return Ok(book);
     }
 
     // POST: api/libro
     [Authorize(Roles = "SuperAdmin,Bibliotecario")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] Book book)
-    {
-        _context.Books.Add(book);
-        await _context.SaveChangesAsync();
+    {        var createdBook = await _service.CreateBookAsync(new CreateBookDto
+        {
+            Title = book.Title,
+            Author = book.Author,
+            ISBN = book.ISBN
+        });
         return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
     }
 
@@ -43,28 +47,17 @@ public class BookController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var book = await _context.Books
-            .Include(l => l.Copies)
-            .FirstOrDefaultAsync(l => l.Id == id);
-
-        if (book == null) return NotFound();
+        var book = await _service.GetBookByIdAsync(id);
         return Ok(book);
     }
 
     // PUT: api/libro/{id}
     [Authorize(Roles = "SuperAdmin,Bibliotecario")]
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] Book updatedBook)
+    public async Task<IActionResult> Update( int id,[FromBody] CreateBookDto dto)
     {
-        var book = await _context.Books.FindAsync(id);
-        if (book == null) return NotFound();
-
-        book.Title = updatedBook.Title;
-        book.Author = updatedBook.Author;
-        book.ISBN = updatedBook.ISBN;
-
-        await _context.SaveChangesAsync();
-        return NoContent();
+        var updatedBook = await _service.UpdateBookAsync(dto, id);
+        return Ok(updatedBook);
     }
 
     // DELETE: api/libro/{id}
@@ -72,11 +65,7 @@ public class BookController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var book = await _context.Books.FindAsync(id);
-        if (book == null) return NotFound();
-
-        _context.Books.Remove(book);
-        await _context.SaveChangesAsync();
+       await _service.DeleteBookAsync(id);
         return NoContent();
     }
 }

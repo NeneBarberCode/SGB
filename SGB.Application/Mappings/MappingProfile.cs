@@ -10,7 +10,8 @@ namespace SGB.Application.Mappings
         {
               CreateMap<Customer, CustomerDto>();
             CreateMap<CreateCustomerDto, Customer>();
-
+            CreateMap<Book, BookDto>();
+            CreateMap<CreateBookDto, Book>();
             CreateMap<Borrowing, BorrowingResponseDto>();
         }
     }
