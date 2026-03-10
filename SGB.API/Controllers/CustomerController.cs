@@ -8,7 +8,7 @@ namespace SGB.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-// [Authorize]
+[Authorize]
 public class CustomerController : ControllerBase
 {
     private readonly ICustomerService _service;
@@ -32,17 +32,4 @@ public class CustomerController : ControllerBase
         return Ok(customers);
     }
 
-    [HttpPost("{customerId}/borrowing/{copyId}")]
-    public async Task<IActionResult> RegisterBorrowing(int customerId, int copyId)
-    {
-        try
-        {
-            var borrowing = await _service.RegisterBorrowingAsync(customerId, copyId);
-            return Ok(borrowing);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { error = ex.Message });
-        }
-    }
 }
