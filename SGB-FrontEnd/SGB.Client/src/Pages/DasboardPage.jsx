@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext.jsx";
 import { Link, Routes, Route } from "react-router-dom";
-import LibrosPage from "./BooksPage.jsx";
-import EjemplaresPage from "./CopiesPage.jsx";
-import ClientesPage from "./CustomerPage.jsx";
-import PrestamosPage from "./BorrowingPage.jsx";
+import BookPage from "./BooksPage.jsx";
+import CopyPage from "./CopiesPage.jsx";
+import BorrowingPage from "./BorrowingPage.jsx";
 import ProtectedRoute from "../components/ProtectedRoute.jsx";
 import AdminPage from "./AdminPage.jsx";
+import CustomerPage from "./CustomerPage.jsx";
 export default function Dashboard() {
   const { user, logout, isSuperAdmin } = useContext(AuthContext);
 
@@ -21,19 +21,18 @@ export default function Dashboard() {
       </header>
 
       <nav>
-        <Link to="libros">Libros</Link> |{" "}
-        <Link to="ejemplares">Ejemplares</Link> |{" "}
-        <Link to="prestamos">Prestamos</Link> |{" "}
-        <Link to="clientes">Clientes</Link> |{" "}
+        <Link to="book">Libros</Link> | <Link to="copy">Ejemplares</Link> |{" "}
+        <Link to="borrowing">Prestamos</Link> |{" "}
+        <Link to="customer">Clientes</Link> |{" "}
         {isSuperAdmin && <Link to="admin">Admin</Link>}
       </nav>
 
       <main>
         <Routes>
-          <Route path="libros" element={<LibrosPage />} />
-          <Route path="ejemplares" element={<EjemplaresPage />} />
-          <Route path="prestamos" element={<PrestamosPage />} />
-          <Route path="clientes" element={<ClientesPage />} />
+          <Route path="book" element={<BookPage />} />
+          <Route path="copy" element={<CopyPage />} />
+          <Route path="borrowing" element={<BorrowingPage />} />
+          <Route path="customer" element={<CustomerPage />} />
           <Route
             path="admin"
             element={

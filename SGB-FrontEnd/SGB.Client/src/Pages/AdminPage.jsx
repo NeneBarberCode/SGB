@@ -8,6 +8,7 @@ export default function AdminPage() {
 
   const [employees, setEmployees] = useState([]);
   const [fee, setFee] = useState("");
+  const [currentFee, setCurrentFee] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,7 +21,7 @@ export default function AdminPage() {
     }
   }, [token]);
   const fetchEmployees = async () => {
-    const res = await fetch("http://localhost:5115/api/admin/empleados", {
+    const res = await fetch("http://localhost:5115/api/admin/employees", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -28,7 +29,7 @@ export default function AdminPage() {
   };
 
   const fetchConfig = async () => {
-    const res = await fetch("http://localhost:5115/api/admin/configuracion", {
+    const res = await fetch("http://localhost:5115/api/admin/configuration", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -39,10 +40,11 @@ export default function AdminPage() {
     if (!text) return;
 
     const data = JSON.parse(text);
-    setFee(data.feeDiario);
+    setCurrentFee(data.dailyFee);
+    setFee("");
   };
   const createEmployee = async () => {
-    await fetch("http://localhost:5115/api/admin/empleados", {
+    await fetch("http://localhost:5115/api/admin/employees", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +67,7 @@ export default function AdminPage() {
   };
 
   const updateFee = async () => {
-    await fetch("http://localhost:5115/api/admin/configuracion/fee", {
+    await fetch("http://localhost:5115/api/admin/configuration/fee", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -73,6 +75,7 @@ export default function AdminPage() {
       },
       body: JSON.stringify(parseFloat(fee)),
     });
+    fetchConfig();
   };
 
   return (
@@ -104,8 +107,12 @@ export default function AdminPage() {
       />
       <button onClick={createEmployee}>Crear</button>
 
-      <h3>Modificar Fee Diario</h3>
-      <input value={fee} onChange={(e) => setFee(e.target.value)} />
+      <h3>Fee Diario {currentFee}</h3>
+      <input
+        type="number"
+        value={fee}
+        onChange={(e) => setFee(e.target.value)}
+      />
       <button onClick={updateFee}>Actualizar Fee</button>
 
       <h3>Empleados</h3>

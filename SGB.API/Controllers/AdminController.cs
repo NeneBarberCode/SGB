@@ -22,7 +22,7 @@ public class AdminController : ControllerBase
     }
 
     // Create employee
-    [HttpPost("empleados")]
+    [HttpPost("employees")]
     public async Task<IActionResult> CreateEmployee(CreateEmployeeDto dto)
     {
         var Employee = new Employee
@@ -49,7 +49,7 @@ public class AdminController : ControllerBase
     }
 
     // List employees
-    [HttpGet("empleados")]
+    [HttpGet("employees")]
     public async Task<IActionResult> ListEployee()
     {
         var employee = await _context.Employees
@@ -67,7 +67,7 @@ public class AdminController : ControllerBase
     }
 
     // get configuration
-    [HttpGet("configuracion")]
+    [HttpGet("configuration")]
     public async Task<IActionResult> GetConfiguration()
     {
         var config = await _context.Configurations.FirstOrDefaultAsync();
@@ -75,7 +75,7 @@ public class AdminController : ControllerBase
     }
 
     // update daily fee
-    [HttpPut("configuracion/fee")]
+    [HttpPut("configuration/fee")]
     public async Task<IActionResult> UpdateDailyFee([FromBody] decimal newFee)
     {
         var config = await _context.Configurations.FirstOrDefaultAsync();

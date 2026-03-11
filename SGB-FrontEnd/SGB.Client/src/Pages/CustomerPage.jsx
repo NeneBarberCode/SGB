@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-export default function ClientesPage() {
+export default function CustomerPage() {
   const { token } = useContext(AuthContext);
 
   const [customers, setCustomers] = useState([]);
@@ -116,7 +116,7 @@ export default function ClientesPage() {
               <td>{c.name}</td>
               <td>{c.email}</td>
               <td>{c.phone}</td>
-              <td>{c.RegistrationDate?.split("T")[0] || "—"}</td>
+              <td>{c.registrationDate?.split("T")[0] || "—"}</td>
             </tr>
           ))}
         </tbody>

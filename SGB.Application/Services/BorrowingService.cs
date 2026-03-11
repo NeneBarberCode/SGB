@@ -73,7 +73,7 @@ public class BorrowingService : IBorrowingService
 }
 
 
-    // Devolver ejemplar y calcular fee acumulado
+    // return and calculate accumulated fee if there is a delay
    public async Task<BorrowingResponseDto> ReturnBorrowingAsync(int borrowingId)
 {
     var borrowing = await _context.Borrowings

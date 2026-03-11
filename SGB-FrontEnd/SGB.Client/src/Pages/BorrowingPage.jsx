@@ -2,7 +2,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-export default function PrestamosPage() {
+export default function BorrowingPage() {
   const { token } = useContext(AuthContext);
   const [borrowings, setBorrowings] = useState([]);
   const [customerId, setCustomerId] = useState("");

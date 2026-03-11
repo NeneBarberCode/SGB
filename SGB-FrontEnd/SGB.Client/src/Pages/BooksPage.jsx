@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-export default function LibrosPage() {
+export default function BookPage() {
   const { token } = useContext(AuthContext);
   const [book, setBook] = useState([]);
   const [title, setTitle] = useState("");

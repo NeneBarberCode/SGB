@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-export default function EjemplaresPage() {
+export default function CopyPage() {
   const { token } = useContext(AuthContext);
   const [copies, setCopies] = useState([]);
   const [books, setBooks] = useState([]);
