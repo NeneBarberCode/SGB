@@ -6,5 +6,9 @@ namespace SGB.Application.Services.Interfaces
     {
         Task<List<EmployeeDto>> ListEmployeeAsync();
         Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto dto);
+
+        Task<EmployeeDto?> UpdateEmployeeAsync(int id, CreateEmployeeDto dto);
+
+        Task<bool> DeleteEmployeeAsync(int id);
     }
 }

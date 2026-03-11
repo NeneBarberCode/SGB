@@ -86,6 +86,7 @@ export default function AdminPage() {
         onChange={(e) => setName(e.target.value)}
       />
       <input
+        type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
