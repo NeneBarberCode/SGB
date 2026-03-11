@@ -10,31 +10,27 @@ namespace SGB.Application.Services;
 
 public class CustomerService : ICustomerService
 {
-    private readonly SgbDbContext _context;
+    private readonly ICustomerRepository _Repository;
     private readonly IMapper _mapper;
 
-    private const int MaxBorrowings = 5;
-    private const int freedays = 30;
-    private const decimal Feeperday = 1.0m; // configurable 
-
-    public CustomerService(SgbDbContext context, IMapper mapper)
+    public CustomerService(ICustomerRepository repository, IMapper mapper)
     {
-        _context = context;
+        _Repository = repository;
         _mapper = mapper;
     }
 
     public async Task<CustomerDto> CreateCustomerAsync(CreateCustomerDto dto)
     {
         var customer = _mapper.Map<Customer>(dto);
-        _context.Customers.Add(customer);
-        await _context.SaveChangesAsync();
+        await _Repository.AddAsync(customer);
+        await _Repository.SaveChangesAsync();
 
         return _mapper.Map<CustomerDto>(customer);
     }
 
     public async Task<IEnumerable<CustomerDto>> ListCustomersAsync()
     {
-        var customers = await _context.Customers.ToListAsync();
+        var customers = await _Repository.GetAllAsync();
         return _mapper.Map<IEnumerable<CustomerDto>>(customers);
     }
   

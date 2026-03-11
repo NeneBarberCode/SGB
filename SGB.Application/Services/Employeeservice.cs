@@ -8,17 +8,17 @@ namespace SGB.Application.Services;
 
 public class EmployeeService : IEmployeeService
 {
-    private readonly SgbDbContext _context;
+    private readonly IEmployeeRepository _repository;
 
-    public EmployeeService(SgbDbContext context)
+    public EmployeeService(IEmployeeRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async Task<List<EmployeeDto>> ListEmployeeAsync()
     {
-        return await _context.Employees
-            .Select(e => new EmployeeDto
+       var employees = await _repository.GetAllAsync();
+            return employees.Select(e => new EmployeeDto
             {
                 Id = e.Id,
                 Name = e.Name,
@@ -26,7 +26,7 @@ public class EmployeeService : IEmployeeService
                 Phone = e.Phone,
                 Role = e.Role
             })
-            .ToListAsync();
+            .ToList();
     }
 
     public async Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto dto)
@@ -40,8 +40,8 @@ public class EmployeeService : IEmployeeService
             Role = dto.Role
         };
 
-        _context.Employees.Add(employee);
-        await _context.SaveChangesAsync();
+        await _repository.AddAsync(employee);
+        await _repository.SaveChangesAsync();
 
         return new EmployeeDto
         {
@@ -55,7 +55,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<EmployeeDto?> UpdateEmployeeAsync(int id, CreateEmployeeDto dto)
     {
-        var employee = await _context.Employees.FindAsync(id);
+        var employee = await _repository.GetByIdAsync(id);
 
         if (employee == null)
             return null;
@@ -65,7 +65,7 @@ public class EmployeeService : IEmployeeService
         employee.Phone = dto.Phone;
         employee.Role = dto.Role;
 
-        await _context.SaveChangesAsync();
+        await _repository.SaveChangesAsync();
 
         return new EmployeeDto
         {
@@ -79,14 +79,13 @@ public class EmployeeService : IEmployeeService
 
     public async Task<bool> DeleteEmployeeAsync(int id)
     {
-        var employee = await _context.Employees.FindAsync(id);
+        var employee = await _repository.GetByIdAsync(id);
 
         if (employee == null)
             return false;
 
-        _context.Employees.Remove(employee);
-
-        await _context.SaveChangesAsync();
+        await _repository.DeleteAsync(employee);
+        await _repository.SaveChangesAsync();
 
         return true;
     }

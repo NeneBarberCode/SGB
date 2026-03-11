@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using SGB.Application.DTOs;
 using SGB.Application.DTOs.Auth;
 using SGB.Application.Services.Interfaces;
 using SGB.Domain.Entities;
@@ -11,34 +10,28 @@ public class BorrowingService : IBorrowingService
 {
     
     
-    private readonly SgbDbContext _context;
+    private readonly IBorrowingRepository _repository;
 
-    public BorrowingService(SgbDbContext context)
+    public BorrowingService(IBorrowingRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     // Crear préstamo
    public async Task<BorrowingResponseDto> CreateBorrowingAsync(int customerId, int copyId)
 {
     
-    int activeBorrowings = await _context.Borrowings
-        .CountAsync(b => b.CustomerId == customerId && b.ReturnDate == null);
+    int activeBorrowings = await _repository.CountActiveBorrowingsAsync(customerId);
 
     if (activeBorrowings >= 5)
         throw new InvalidOperationException("El cliente ya tiene 5 préstamos activos.");
 
-    bool delays = await _context.Borrowings
-        .AnyAsync(b => b.CustomerId == customerId &&
-                       b.ReturnDate == null &&
-                       DateTime.Now > b.LimitDate);
-
+    bool delays = await _repository.HasDelaysAsync(customerId);
+      
     if (delays)
         throw new InvalidOperationException("El cliente tiene préstamos retrasados.");
 
-    var copy = await _context.Copies
-        .Include(c => c.Book)
-        .FirstOrDefaultAsync(c => c.Id == copyId);
+     var copy = await _repository.GetCopyWithBookAsync(copyId);
 
     if (copy == null)
         throw new InvalidOperationException("Ejemplar no encontrado.");
@@ -57,18 +50,20 @@ public class BorrowingService : IBorrowingService
 
     copy.Available = false;
 
-    _context.Borrowings.Add(borrowing);
-    await _context.SaveChangesAsync();
+    await _repository.AddBorrowingAsync(borrowing);
+    await _repository.SaveChangesAsync();
+    
+    var customer = await _repository.GetCustomerAsync(customerId);
 
     return new BorrowingResponseDto
     {
-        Id = borrowing.Id,
-        Customer = (await _context.Customers.FindAsync(customerId))!.Name,
-        Book = copy.Book.Title,
-        BorrowDate = borrowing.BorrowDate,
-        LimitDate = borrowing.LimitDate,
-        ReturnDate = borrowing.ReturnDate,
-        AccumulatedFee = borrowing.AccumulatedFee
+         Id = borrowing.Id,
+            Customer = customer!.Name,
+            Book = copy.Book.Title,
+            BorrowDate = borrowing.BorrowDate,
+            LimitDate = borrowing.LimitDate,
+            ReturnDate = borrowing.ReturnDate,
+            AccumulatedFee = borrowing.AccumulatedFee
     };
 }
 
@@ -76,11 +71,7 @@ public class BorrowingService : IBorrowingService
     // return and calculate accumulated fee if there is a delay
    public async Task<BorrowingResponseDto> ReturnBorrowingAsync(int borrowingId)
 {
-    var borrowing = await _context.Borrowings
-        .Include(b => b.Copy)
-            .ThenInclude(c => c.Book)
-        .Include(c => c.Customer)
-        .FirstOrDefaultAsync(b => b.Id == borrowingId);
+     var borrowing = await _repository.GetBorrowingWithRelationsAsync(borrowingId);
 
     if (borrowing == null)
         throw new InvalidOperationException("Préstamo no encontrado.");
@@ -101,7 +92,7 @@ public class BorrowingService : IBorrowingService
 
     borrowing.Copy.Available = true;
 
-    await _context.SaveChangesAsync();
+     await _repository.SaveChangesAsync();
 
     return new BorrowingResponseDto
     {
@@ -117,12 +108,9 @@ public class BorrowingService : IBorrowingService
 
 public async Task<IEnumerable<BorrowingResponseDto>> ListBorrowingsAsync()
 {
-    
-    return await _context.Borrowings
-        .Include(b => b.Customer)
-        .Include(b => b.Copy)
-            .ThenInclude(c => c.Book)
-        .Select(p => new BorrowingResponseDto
+     var borrowings = await _repository.GetAllBorrowingsAsync();
+
+    return borrowings.Select(p => new BorrowingResponseDto
         {
             Id = p.Id,
             Customer = p.Customer.Name,
@@ -132,7 +120,7 @@ public async Task<IEnumerable<BorrowingResponseDto>> ListBorrowingsAsync()
             ReturnDate = p.ReturnDate,
             AccumulatedFee = p.AccumulatedFee
         })
-        .ToListAsync();
+        .ToList();
 }
 
 }

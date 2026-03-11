@@ -8,33 +8,32 @@ namespace SGB.Application.Services;
 
 public class ConfigurationService : IConfigurationService
 {
-    private readonly SgbDbContext _context;
+    private readonly IConfigurationRepository _repository;
 
-    public ConfigurationService(SgbDbContext context)
+    public ConfigurationService(IConfigurationRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async Task<ConfigurationDto> GetAsync()
     {
-        return await _context.Configurations
-            .Select(c => new ConfigurationDto
+           var config = await _repository.GetAsync();
+            return config == null ? new ConfigurationDto() : new ConfigurationDto
             {
-                Id = c.Id,
-               DailyFee = c.DailyFee,
-            })
-            .FirstOrDefaultAsync() ?? new ConfigurationDto();
+                Id = config.Id,
+                DailyFee = config.DailyFee,
+            };
     }
 
     public async Task UpdateAsync(ConfigurationDto dto)
     {
-        var configuration = await _context.Configurations.FindAsync(dto.Id);
+        var configuration = await _repository.GetByIdAsync(dto.Id);
         if (configuration == null)
             throw new InvalidOperationException("Configuración no encontrada.");
 
         configuration.DailyFee = dto.DailyFee;
 
-        await _context.SaveChangesAsync();
+        await _repository.SaveChangesAsync();
     }
 
 }
