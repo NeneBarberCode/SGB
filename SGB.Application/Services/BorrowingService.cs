@@ -2,8 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using SGB.Application.DTOs.Auth;
 using SGB.Application.Services.Interfaces;
 using SGB.Domain.Entities;
-using SGB.Infrastructure.Persistence;
-
 namespace SGB.Application.Services;
 
 public class BorrowingService : IBorrowingService
@@ -11,13 +9,15 @@ public class BorrowingService : IBorrowingService
     
     
     private readonly IBorrowingRepository _repository;
+    private readonly IConfigurationService _service;
 
-    public BorrowingService(IBorrowingRepository repository)
+    public BorrowingService(IBorrowingRepository repository, IConfigurationService configurationService)
     {
         _repository = repository;
+        _service = configurationService;
     }
 
-    // Crear préstamo
+    // crete borroing with validations: max 5 active borrowings, no delays, copy available
    public async Task<BorrowingResponseDto> CreateBorrowingAsync(int customerId, int copyId)
 {
     
@@ -80,15 +80,16 @@ public class BorrowingService : IBorrowingService
         throw new InvalidOperationException("Préstamo ya devuelto.");
 
     borrowing.ReturnDate = DateTime.Now;
+     
+     var config = await _service.GetAsync();
+    decimal DailyFee = config.DailyFee;
 
-    int feeDiario = 1;
-
-    int diasRetraso = 0;
+    int delayedDays = 0;
 
     if (borrowing.ReturnDate > borrowing.LimitDate)
-        diasRetraso = (borrowing.ReturnDate.Value - borrowing.LimitDate).Days;
+        delayedDays = (borrowing.ReturnDate.Value - borrowing.LimitDate).Days;
 
-    borrowing.AccumulatedFee = diasRetraso * feeDiario;
+    borrowing.AccumulatedFee = delayedDays * DailyFee;
 
     borrowing.Copy.Available = true;
 
