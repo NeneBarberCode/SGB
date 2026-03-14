@@ -2,19 +2,22 @@ using Microsoft.EntityFrameworkCore;
 using SGB.Application.DTOs.Auth;
 using SGB.Application.Services.Interfaces;
 using SGB.Domain.Entities;
+using AutoMapper;
 namespace SGB.Application.Services;
 
 public class BorrowingService : IBorrowingService
 {
     
-    
+    private readonly IMapper _mapper;
     private readonly IBorrowingRepository _repository;
     private readonly IConfigurationService _service;
 
-    public BorrowingService(IBorrowingRepository repository, IConfigurationService configurationService)
+    public BorrowingService(IBorrowingRepository repository, IConfigurationService configurationService
+    , IMapper mapper)
     {
         _repository = repository;
         _service = configurationService;
+        _mapper = mapper;
     }
 
     // crete borroing with validations: max 5 active borrowings, no delays, copy available
@@ -55,16 +58,7 @@ public class BorrowingService : IBorrowingService
     
     var customer = await _repository.GetCustomerAsync(customerId);
 
-    return new BorrowingResponseDto
-    {
-         Id = borrowing.Id,
-            Customer = customer!.Name,
-            Book = copy.Book.Title,
-            BorrowDate = borrowing.BorrowDate,
-            LimitDate = borrowing.LimitDate,
-            ReturnDate = borrowing.ReturnDate,
-            AccumulatedFee = borrowing.AccumulatedFee
-    };
+    return  _mapper.Map<BorrowingResponseDto>(borrowing);
 }
 
 
@@ -94,34 +88,14 @@ public class BorrowingService : IBorrowingService
     borrowing.Copy.Available = true;
 
      await _repository.SaveChangesAsync();
-
-    return new BorrowingResponseDto
-    {
-        Id = borrowing.Id,
-        Customer = borrowing.Customer.Name,
-        Book = borrowing.Copy.Book.Title,
-        BorrowDate = borrowing.BorrowDate,
-        LimitDate = borrowing.LimitDate,
-        ReturnDate = borrowing.ReturnDate,
-        AccumulatedFee = borrowing.AccumulatedFee
-    };
+     return _mapper.Map<BorrowingResponseDto>(borrowing);
 }
 
 public async Task<IEnumerable<BorrowingResponseDto>> ListBorrowingsAsync()
 {
      var borrowings = await _repository.GetAllBorrowingsAsync();
 
-    return borrowings.Select(p => new BorrowingResponseDto
-        {
-            Id = p.Id,
-            Customer = p.Customer.Name,
-            Book = p.Copy.Book.Title,
-            BorrowDate = p.BorrowDate,
-            LimitDate = p.LimitDate,
-            ReturnDate = p.ReturnDate,
-            AccumulatedFee = p.AccumulatedFee
-        })
-        .ToList();
+     return _mapper.Map<IEnumerable<BorrowingResponseDto>>(borrowings);
 }
 
 }

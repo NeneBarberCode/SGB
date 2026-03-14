@@ -1,7 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using SGB.Application.DTOs.Auth;
 using SGB.Application.Services.Interfaces;
-using SGB.Infrastructure.Persistence;
+using AutoMapper;
 
 namespace SGB.Application.Services;
 
@@ -9,20 +8,22 @@ namespace SGB.Application.Services;
 public class ConfigurationService : IConfigurationService
 {
     private readonly IConfigurationRepository _repository;
+    private readonly IMapper _mapper;
 
-    public ConfigurationService(IConfigurationRepository repository)
+    public ConfigurationService(IConfigurationRepository repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
 
     public async Task<ConfigurationDto> GetAsync()
     {
-           var config = await _repository.GetAsync();
-            return config == null ? new ConfigurationDto() : new ConfigurationDto
-            {
-                Id = config.Id,
-                DailyFee = config.DailyFee,
-            };
+       var config = await _repository.GetAsync();
+
+      if (config == null)
+        return new ConfigurationDto();
+
+       return _mapper.Map<ConfigurationDto>(config);
     }
 
     public async Task UpdateAsync(ConfigurationDto dto)
@@ -31,7 +32,7 @@ public class ConfigurationService : IConfigurationService
         if (configuration == null)
             throw new InvalidOperationException("Configuración no encontrada.");
 
-        configuration.DailyFee = dto.DailyFee;
+       _mapper.Map(dto, configuration);
 
         await _repository.SaveChangesAsync();
     }

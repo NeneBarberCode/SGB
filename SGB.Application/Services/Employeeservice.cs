@@ -1,56 +1,35 @@
-using Microsoft.EntityFrameworkCore;
 using SGB.Application.DTOs.Auth;
 using SGB.Application.Services.Interfaces;
 using SGB.Domain.Entities;
-using SGB.Infrastructure.Persistence;
+using AutoMapper;
 
 namespace SGB.Application.Services;
 
 public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _repository;
+    private readonly IMapper _mapper;
 
-    public EmployeeService(IEmployeeRepository repository)
+    public EmployeeService(IEmployeeRepository repository, IMapper mapper )
     {
         _repository = repository;
+        _mapper = mapper;
     }
 
     public async Task<List<EmployeeDto>> ListEmployeeAsync()
     {
        var employees = await _repository.GetAllAsync();
-            return employees.Select(e => new EmployeeDto
-            {
-                Id = e.Id,
-                Name = e.Name,
-                Email = e.Email,
-                Phone = e.Phone,
-                Role = e.Role
-            })
-            .ToList();
+       return _mapper.Map<List<EmployeeDto>>(employees);
     }
 
     public async Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto dto)
     {
-        var employee = new Employee
-        {
-            Name = dto.Name,
-            Email = dto.Email,
-            Phone = dto.Phone,
-            PasswordHash = dto.Password,
-            Role = dto.Role
-        };
+       var employee = _mapper.Map<Employee>(dto);
 
         await _repository.AddAsync(employee);
         await _repository.SaveChangesAsync();
 
-        return new EmployeeDto
-        {
-            Id = employee.Id,
-            Name = employee.Name,
-            Phone = employee.Phone,
-            Email = employee.Email,
-            Role = employee.Role
-        };
+        return _mapper.Map<EmployeeDto>(employee);
     }
 
     public async Task<EmployeeDto?> UpdateEmployeeAsync(int id, CreateEmployeeDto dto)
@@ -60,21 +39,12 @@ public class EmployeeService : IEmployeeService
         if (employee == null)
             return null;
 
-        employee.Name = dto.Name;
-        employee.Email = dto.Email;
-        employee.Phone = dto.Phone;
-        employee.Role = dto.Role;
+       _mapper.Map(dto, employee);
 
         await _repository.SaveChangesAsync();
 
-        return new EmployeeDto
-        {
-            Id = employee.Id,
-            Name = employee.Name,
-            Email = employee.Email,
-            Phone = employee.Phone,
-            Role = employee.Role
-        };
+         return _mapper.Map<EmployeeDto>(employee);
+         
     }
 
     public async Task<bool> DeleteEmployeeAsync(int id)
